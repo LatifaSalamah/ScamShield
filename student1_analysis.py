@@ -1,32 +1,36 @@
-# ScamShield - Student 1
-# Message Analysis
-
 def analyze_message(message):
 
-    message = message.lower()
+    urgency = False
+    threat = False
+    sensitive = False
+    link = False
 
-    urgency_words = ["urgent", "immediately", "act now", "today"]
-    threat_words = ["suspended", "blocked", "closed", "terminated"]
-    sensitive_words = ["password", "otp", "verification code"]
+    if "urgent" in message or "Urgent" in message or "URGENT" in message:
+        urgency = True
+    if "immediately" in message or "Immediately" in message or "IMMEDIATELY" in message:
+        urgency = True
+    if "act now" in message or "Act now" in message or "ACT NOW" in message:
+        urgency = True
 
-    indicators = []
+    if "suspended" in message or "Suspended" in message or "SUSPENDED" in message:
+        threat = True
+    if "blocked" in message or "Blocked" in message or "BLOCKED" in message:
+        threat = True
+    if "closed" in message or "Closed" in message or "CLOSED" in message:
+        threat = True
+    if "terminated" in message or "Terminated" in message or "TERMINATED" in message:
+        threat = True
 
-    for word in urgency_words:
-        if word in message:
-            indicators.append("Urgency")
-            break
+    if "password" in message or "Password" in message or "PASSWORD" in message:
+        sensitive = True
+    if "otp" in message or "Otp" in message or "OTP" in message:
+        sensitive = True
+    if "verification code" in message or "Verification code" in message or "VERIFICATION CODE" in message:
+        sensitive = True
 
-    for word in threat_words:
-        if word in message:
-            indicators.append("Threat")
-            break
+    if "http" in message or "Http" in message or "HTTP" in message:
+        link = True
+    if "www." in message or "Www." in message or "WWW." in message:
+        link = True
 
-    for word in sensitive_words:
-        if word in message:
-            indicators.append("Sensitive Information")
-            break
-
-    if "http" in message or "www." in message:
-        indicators.append("Link")
-
-    return indicators
+    return urgency, threat, sensitive, link
